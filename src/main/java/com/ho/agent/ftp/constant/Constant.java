@@ -6,6 +6,7 @@ public class Constant {
 		public static final String HELP = "--help";
 		public static final String GET_LIST = "--ls";
 		public static final String STORE = "--s";
+		public static final String DOWNLOAD = "--d";
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.ho.agent.ftp;
 
 import com.ho.agent.ftp.command.service.CommandService;
+import com.ho.agent.ftp.command.service.impl.DownloadServiceImpl;
 import com.ho.agent.ftp.command.service.impl.GetListServiceImpl;
 import com.ho.agent.ftp.command.service.impl.HelpServiceImpl;
 import com.ho.agent.ftp.command.service.impl.StoreServiceImpl;
@@ -33,10 +34,20 @@ public class App {
 				commandService.run();
 				return;
 			}
-			String remotePath = args[1];
+			String remoteFile = args[1];
 			String localFile = args[2];
 			
-			commandService = new StoreServiceImpl(remotePath, localFile);
+			commandService = new StoreServiceImpl(remoteFile, localFile);
+		} else if (command.equals(Command.DOWNLOAD)) {
+			if (args.length < 2) {
+				commandService = new HelpServiceImpl();
+				commandService.run();
+				return;
+			}
+			String remoteFile = args[1];
+			String localFile = args[2];
+			
+			commandService = new DownloadServiceImpl(remoteFile, localFile);
 		}
 		
 		commandService.run();

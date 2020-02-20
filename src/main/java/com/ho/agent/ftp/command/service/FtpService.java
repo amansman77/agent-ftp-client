@@ -1,8 +1,10 @@
 package com.ho.agent.ftp.command.service;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +94,24 @@ public class FtpService {
 					input.close();
 				} catch (IOException e) {
 					throw new RuntimeException("Error while close input stream", e);
+				}
+			}
+		}
+	}
+
+	public boolean download(String remoteFile, String localFile) {
+		OutputStream output = null;
+        try {
+			output = new FileOutputStream(localFile);
+			return ftpClient.retrieveFile(remoteFile, output);
+		} catch (IOException e) {
+			throw new RuntimeException("Error while download file", e);
+		} finally {
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException e) {
+					throw new RuntimeException("Error while close output stream", e);
 				}
 			}
 		}

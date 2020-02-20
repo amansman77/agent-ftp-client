@@ -3,12 +3,12 @@ package com.ho.agent.ftp.command.service.impl;
 import com.ho.agent.ftp.command.service.CommandService;
 import com.ho.agent.ftp.command.service.FtpService;
 
-public class StoreServiceImpl implements CommandService {
+public class DownloadServiceImpl implements CommandService {
 
 	private String remoteFile;
 	private String localFile;
 	
-	public StoreServiceImpl(String remoteFile, String localFile) {
+	public DownloadServiceImpl(String remoteFile, String localFile) {
 		this.remoteFile = remoteFile;
 		this.localFile = localFile;
 	}
@@ -19,10 +19,10 @@ public class StoreServiceImpl implements CommandService {
 		ftpService.connect();
 		ftpService.login();
 		
-		if (ftpService.store(remoteFile, localFile)) {
-			System.out.println("Success store file");
+		if (ftpService.download(remoteFile, localFile)) {
+			System.out.println("Success download file");
 		} else {
-			System.out.println("Fail store file");
+			System.out.println("Fail download file");
 		}
 		
 		ftpService.disconnect();

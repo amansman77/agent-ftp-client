@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterEach;
@@ -48,6 +49,18 @@ class FtpServiceTest {
 		String[] fileNames = ftpService.getList("/");
 		String remoteFileName = Arrays.asList(fileNames).stream().filter(fileName -> fileName.equals(storeFileName)).findAny().get();
 		assertEquals(storeFileName, remoteFileName);
+	}
+	
+	@Test
+	void testDownload() {
+//		String fileName = "test-remote.txt";
+		String fileName = "테스트-원격.txt";
+		String localFileName = "C:/test-svn-directory/" + fileName;
+		boolean isSuccess = ftpService.download("/" + fileName, localFileName);
+		assertTrue(isSuccess);
+		
+		File localFile = new File(localFileName);
+		assertTrue(localFile.exists());
 	}
 	
 }
