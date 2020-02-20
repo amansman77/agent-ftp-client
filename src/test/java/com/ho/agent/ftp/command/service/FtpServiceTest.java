@@ -1,6 +1,7 @@
 package com.ho.agent.ftp.command.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
@@ -27,19 +28,12 @@ class FtpServiceTest {
 		String[] fileNames = ftpService.getList("/");
 		
 		assertNotNull(fileNames);
-		assertEquals(1, fileNames.length);
-		assertEquals("HDD1", fileNames[0]);
+		assertTrue(fileNames.length > 0);
 		
-		fileNames = ftpService.getList("/HDD1");
-		
-		assertNotNull(fileNames);
-		assertEquals(1, fileNames.length);
-		assertEquals("업로드", fileNames[0]);
-		
-		fileNames = ftpService.getList("/HDD1/업로드");
+		fileNames = ftpService.getList("/테스트");
 		
 		assertNotNull(fileNames);
-		assertEquals(6, fileNames.length);
+		assertEquals(1, fileNames.length);
 	}
 	
 }
