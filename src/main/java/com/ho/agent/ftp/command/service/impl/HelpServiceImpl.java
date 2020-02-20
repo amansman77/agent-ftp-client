@@ -9,6 +9,7 @@ public class HelpServiceImpl implements CommandService {
 	public void run() {
 		System.out.println("Command List : ");
 		System.out.println(Command.HELP + "\tprint this help message to the output stream");
+		System.out.println(Command.GET_LIST + "\tprint remote file list to the output stream");
 	}
 	
 }
