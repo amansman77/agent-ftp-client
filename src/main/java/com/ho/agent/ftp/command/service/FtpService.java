@@ -1,6 +1,8 @@
 package com.ho.agent.ftp.command.service;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +20,12 @@ public class FtpService {
 	private final FTPClient ftpClient = new FTPClient();
 	
 	public void connect() {
-		ftpClient.setAutodetectUTF8(true);
-		ftpClient.setControlEncoding("UTF-8");
 		
 		int reply;
 		try {
+			ftpClient.setAutodetectUTF8(true);
+			ftpClient.setControlEncoding("UTF-8");
+			
 			ftpClient.connect(ftpProperty.getUrl());
 		} catch (SocketException e) {
 			throw new RuntimeException("Error while connect to ftp server", e);
@@ -74,6 +77,24 @@ public class FtpService {
 			throw new RuntimeException("Error while get list", e);
 		}
         return fileNames.toArray(new String[] {});
+	}
+
+	public boolean store(String remotePath, String localFile) {
+		InputStream input = null;
+		try {
+			input = new FileInputStream(localFile);
+			return ftpClient.storeFile(remotePath, input);
+		} catch (IOException e) {
+			throw new RuntimeException("Error while store file", e);
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					throw new RuntimeException("Error while close input stream", e);
+				}
+			}
+		}
 	}
 	
 }

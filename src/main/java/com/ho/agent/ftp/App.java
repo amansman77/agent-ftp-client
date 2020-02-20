@@ -3,6 +3,7 @@ package com.ho.agent.ftp;
 import com.ho.agent.ftp.command.service.CommandService;
 import com.ho.agent.ftp.command.service.impl.GetListServiceImpl;
 import com.ho.agent.ftp.command.service.impl.HelpServiceImpl;
+import com.ho.agent.ftp.command.service.impl.StoreServiceImpl;
 import com.ho.agent.ftp.constant.Constant.Command;
 
 public class App {
@@ -26,6 +27,16 @@ public class App {
 			}
 			
 			commandService = new GetListServiceImpl(remotePath);
+		} else if (command.equals(Command.STORE)) {
+			if (args.length < 2) {
+				commandService = new HelpServiceImpl();
+				commandService.run();
+				return;
+			}
+			String remotePath = args[1];
+			String localFile = args[2];
+			
+			commandService = new StoreServiceImpl(remotePath, localFile);
 		}
 		
 		commandService.run();
